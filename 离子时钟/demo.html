@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border:1px solid #c0c;
+            display: block;
+            margin:  0 auto;
+            background-color: rgb(111, 112, 28);
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        // function inherit(p){
+        //     if(p==null){
+        //         throw TypeError;
+        //     }
+        //     if(Object.create){
+        //         return Object.create(p);
+        //     }
+        //     var t = typeof p;
+        //     if(t !=="object" && t !=="function"){
+        //         throw TypeError;
+        //     }
+        //     function f(){};
+        //     f.prototype = p;
+        //     return new f();
+        // }
+        var obj = {
+            name : "zs",
+            age : 12
+        }
+       var o = {
+          x:3.0,
+          y:4.0,
+          get r(){return Math.sqrt(this.x*this.x + this.y*this.y)},
+          set r(newvalue){
+              var oldvalue = Math.sqrt(this.x*this.x +this.y*this.y);
+              var ratio = newvalue / oldvalue;
+              this.x *= ratio;
+              this.y *= ratio;
+          },
+          get theta(){return Math.atan2(this.y,this.x);}
+
+       }
+
+       var serialnum = {
+           $n : 0,
+           get next(){return this.$n++},
+           set next(n){
+               if(n >= this.$n) this.$n = n;
+               else throw "序列号的值不能比当前的值小";
+           }
+       }
+       for(var i = 0 ; i<10 ; i++){
+           serialnum.next;
+       }
+       console.log(serialnum.next = 19 )
+        // var obj1 = 1;
+        // console.log(inherit(obj))
+        // function extend(p){
+        //     var obj = {};
+        //     for(var key in p){
+        //         if(p.hasOwnProperty(key)){
+        //             obj[key] = p[key];
+        //         }
+        //     }
+        //     return obj;
+        // }
+        // var obj1 = extend(obj);
+        // obj.name = "wangwu";
+        // // obj1.name = "ls";
+        // console.log(obj,obj1)
+        console.log(Object.keys(obj))
+        console.log(Object.getOwnPropertyNames(obj))
+        console.log(o.theta)
+    </script>
+</body>
+</html>

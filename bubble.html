@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    canvas{
+        border: 1px solid #000;
+    }
+    </style>
+</head>
+<body>
+    <canvas width="800" height="600"></canvas>
+    <script>
+    var canvas = document.querySelector("canvas");
+    var cxt = canvas.getContext("2d");
+    var w = canvas.width;
+    var h = canvas.height;
+    var colorArr = ["#FFBB66"," #FFAA33" ,"#00DDAA","#003377","#99FFFF","#770077","#666666","#BA55D3"," #FF1493"];
+    function random(x){
+        return  Math.random()*x;
+    }
+
+    function  Ball(){
+        this.x = random(w);
+        this.y = random(h);
+        this.r = parseInt(random(10));
+        this.color = colorArr[Math.floor(random(colorArr.length - 1))];
+        this.vx = random(3);
+        this.vy = random(3);
+    } 
+
+    Ball.prototype.draw = function(){
+        cxt.beginPath();
+        cxt.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+        cxt.fillStyle = this.color;
+        cxt.fill();
+    }
+    Ball.prototype.move = function(){
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if(this.x>w-this.r/2 || this.x < this.r/2){
+            this.vx = -this.vx;
+        }
+        if(this.y>h-this.r/2 || this.y < this.r/2){
+            this.vy = -this.vy;
+        }
+        this.draw();
+    }
+    function creat(num){
+        var ballArr = [];
+        for(i=0 ; i<num ;i++){
+            var ball = new Ball();
+            ballArr.push(ball);
+        }
+        return ballArr;
+    }
+    var ballArr = creat(100); 
+     console.log(ballArr);
+     function allMove(){
+        cxt.clearRect(0,0,w,h);
+        ballArr.forEach(function(v){
+            v.move();
+        })   
+     }
+     setInterval(allMove,16);
+    
+
+    // for(var i=0;i<100;i++){
+    //     var ball = new Ball();
+    //     ball.draw();
+    // }
+
+    </script>
+</body>
+</html>

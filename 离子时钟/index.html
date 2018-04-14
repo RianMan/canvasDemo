@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgba(68, 241, 198, 0.712);
+        }
+
+        canvas {
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <script src="./moment-with-locales.js"></script>
+    <script src="./data.js"></script>
+    <script>
+        //  var canvas = document.querySelector("canvas");
+        // canvas.width = 1200;
+        // canvas.height = 100;
+        // var cxt = canvas.getContext("2d");
+        // cxt.arc(5 , 5 , 4, 0, Math.PI * 2);
+        // cxt.fillStyle = "#fff";
+        // cxt.fill();
+        // cxt.beginPath();
+        // cxt.arc( 15 , 5 , 4, 0, Math.PI * 2);
+        // cxt.fill();
+        function Clock() {
+            var canvas = document.querySelector("canvas");
+            canvas.width = 1200;
+            canvas.height = 100;
+            this.cxt = canvas.getContext("2d");
+            this.h = canvas.height;
+            this.w = canvas.width;
+            this.r = this.h / 20 - 1;
+        }
+        Clock.prototype = {
+            init: function (num, index) {
+                for (var i = 0; i < data[num].length; i++) {
+                    for (var j = 0; j < data[num][i].length; j++) {
+                        if (data[num][i][j] === 1) {
+                            this.cxt.beginPath();
+                            this.cxt.arc((2 * j + 1 + index * 20 + 50) * (this.r + 1), (2 * i + 1) * (this.r +
+                                1), this.r, 0, Math.PI * 2);
+                            this.cxt.fillStyle = "#fff";
+                            this.cxt.fill();
+                        }
+                    }
+                }
+            },
+            getTime: function () {
+                var time;
+                var timeArr;
+                time = moment().format("hh:mm:ss");
+                timeArr = time.split("");
+                timeArr.forEach(function (v, i, arr) {
+                    if (i === 2 || i === 5) {
+                        arr[i] = 10;
+                    }
+                })
+                for (var i = 0; i < timeArr.length; i++) {
+                    clock.init(timeArr[i], i);
+                }
+            },
+            clear:function(){
+                this.cxt.clearRect(0,0,2000,1000);
+            },
+            render:function(){
+                
+            }
+        }
+        var clock = new Clock();
+
+
+        
+        setInterval(function () {
+            clock.clear();
+            clock.getTime(); 
+        }, 1000)
+    </script>
+</body>
+
+</html>
